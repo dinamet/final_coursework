@@ -1,20 +1,19 @@
 // Tourist Destination Catalog
 // Catalogs tourist destinations, providing information about attractions, accommodations and activities for travelers
 
-// Main.java
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
     private static final List<Destination> destinations = new ArrayList<>();
-    private static final String FILE_NAME = "destinations.txt";
+    private static final String FILE_NAME = "destinations.csv";
 
     public static void main(String[] args) {
         loadDestinations();
         boolean exit = false;
         while (!exit) {
-            System.out.println("\n=== Tourist Destination Catalog (Kyrgyzstan only) ===");
+            System.out.println("\n=== Tourist Destination Catalog ===");
             System.out.println("1. Add destination");
             System.out.println("2. View destinations");
             System.out.println("3. Update destination");
@@ -39,7 +38,8 @@ public class Main {
     private static void addDestination() {
         System.out.print("Enter name: ");
         String name = scanner.nextLine();
-        String country = "Kyrgyzstan";
+        System.out.print("Enter country: ");
+        String country = scanner.nextLine();
         System.out.print("Enter description: ");
         String description = scanner.nextLine();
         System.out.print("Enter accommodation: ");
@@ -71,12 +71,14 @@ public class Main {
             System.out.println("Invalid number.");
             return;
         }
+
+        Destination dest = destinations.get(index);
         System.out.print("Enter new description: ");
-        destinations.get(index).setDescription(scanner.nextLine());
+        dest.setDescription(scanner.nextLine());
         System.out.print("Enter new accommodation: ");
-        destinations.get(index).setAccommodation(scanner.nextLine());
+        dest.setAccommodation(scanner.nextLine());
         System.out.print("Enter new activity: ");
-        destinations.get(index).setActivity(scanner.nextLine());
+        dest.setActivity(scanner.nextLine());
         System.out.println("Destination updated.");
     }
 
@@ -96,7 +98,13 @@ public class Main {
     private static void saveDestinations() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
             for (Destination d : destinations) {
-                writer.write(d.getName() + "," + d.getCountry() + "," + d.getDescription() + "," + d.getAccommodation() + "," + d.getActivity());
+                writer.write(String.join(",",
+                        escape(d.getName()),
+                        escape(d.getCountry()),
+                        escape(d.getDescription()),
+                        escape(d.getAccommodation()),
+                        escape(d.getActivity())
+                ));
                 writer.newLine();
             }
         } catch (IOException e) {
@@ -111,9 +119,9 @@ public class Main {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
+                String[] parts = line.split(",", -1);
                 if (parts.length == 5) {
-                    Destination d = new Destination(parts[0], parts[1], parts[2], parts[3], parts[4]);
+                    Destination d = new Destination(unescape(parts[0]), unescape(parts[1]), unescape(parts[2]), unescape(parts[3]), unescape(parts[4]));
                     destinations.add(d);
                 }
             }
@@ -121,9 +129,25 @@ public class Main {
             System.out.println("Error loading destinations: " + e.getMessage());
         }
     }
+
+    // Обработка запятых в CSV
+    private static String escape(String text) {
+        if (text.contains(",") || text.contains("\"")) {
+            text = text.replace("\"", "\"\"");
+            return "\"" + text + "\"";
+        }
+        return text;
+    }
+
+    private static String unescape(String text) {
+        if (text.startsWith("\"") && text.endsWith("\"")) {
+            text = text.substring(1, text.length() - 1);
+            return text.replace("\"\"", "\"");
+        }
+        return text;
+    }
 }
 
-// Destination.java
 class Destination {
     private String name;
     private String country;
