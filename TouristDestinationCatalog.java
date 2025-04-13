@@ -8,27 +8,33 @@ public class TouristDestinationCatalog {
         private String location;
         private String accommodation;
         private double cost;
-        private String activities;
+        private String climate;
+        private String safety;
+        private String attractions;
 
-        public Destination(String name, String location, String accommodation, double cost, String activities) {
+        public Destination(String name, String location, String accommodation, double cost, String climate, String safety, String attractions) {
             this.name = name;
             this.location = location;
             this.accommodation = accommodation;
             this.cost = cost;
-            this.activities = activities;
+            this.climate = climate;
+            this.safety = safety;
+            this.attractions = attractions;
         }
 
         public String toCSV() {
-            return name + "," + location + "," + accommodation + "," + cost + "," + activities;
+            return name + "," + location + "," + accommodation + "," + cost + "," + climate + "," + safety + "," + attractions;
         }
 
         @Override
         public String toString() {
-            return "Destination: " + name + "\n" +
+            return "Name: " + name + "\n" +
                     "Location: " + location + "\n" +
                     "Accommodation: " + accommodation + "\n" +
                     "Cost: $" + cost + "\n" +
-                    "Activities: " + activities + "\n";
+                    "Climate: " + climate + "\n" +
+                    "Safety: " + safety + "\n" +
+                    "Attractions: " + attractions;
         }
     }
 
@@ -43,9 +49,11 @@ public class TouristDestinationCatalog {
             int choice = getIntInput("Choose an option: ");
             switch (choice) {
                 case 1 -> addDestination();
-                case 2 -> displayDestinations();
-                case 3 -> saveToFile();
-                case 4 -> {
+                case 2 -> viewDestinations();
+                case 3 -> updateDestination();
+                case 4 -> deleteDestination();
+                case 5 -> saveToFile();
+                case 6 -> {
                     System.out.println("Exiting program.");
                     running = false;
                 }
@@ -58,42 +66,85 @@ public class TouristDestinationCatalog {
         System.out.println("\n=== Tourist Destination Catalog ===");
         System.out.println("1. Add Destination");
         System.out.println("2. View All Destinations");
-        System.out.println("3. Save to CSV File");
-        System.out.println("4. Exit");
+        System.out.println("3. Update Destination");
+        System.out.println("4. Delete Destination");
+        System.out.println("5. Save to CSV File");
+        System.out.println("6. Exit");
     }
 
+    // method
     private static void addDestination() {
-        System.out.print("Enter name: ");
-        String name = scanner.nextLine();
+        System.out.println("\n--- Add New Destination ---");
+        String name = input("Name: ");
+        String location = input("Location: ");
+        String accommodation = input("Accommodation: ");
+        double cost = getDoubleInput("Cost (USD): ");
+        String climate = input("Climate: ");
+        String safety = input("Safety: ");
+        String attractions = input("Attractions: ");
 
-        System.out.print("Enter location: ");
-        String location = scanner.nextLine();
-
-        System.out.print("Enter accommodation: ");
-        String accommodation = scanner.nextLine();
-
-        double cost = getDoubleInput("Enter estimated cost (USD): ");
-
-        System.out.print("Enter activities: ");
-        String activities = scanner.nextLine();
-
-        Destination d = new Destination(name, location, accommodation, cost, activities);
+        Destination d = new Destination(name, location, accommodation, cost, climate, safety, attractions);
         destinations.add(d);
         System.out.println("Destination added!");
     }
 
-    private static void displayDestinations() {
+    // method
+    private static void viewDestinations() {
+        System.out.println("\n--- All Destinations ---");
         if (destinations.isEmpty()) {
             System.out.println("No destinations available.");
             return;
         }
 
-        for (Destination d : destinations) {
-            System.out.println("-------------------------------");
-            System.out.println(d);
+        for (int i = 0; i < destinations.size(); i++) {
+            System.out.println("\n[" + (i + 1) + "]");
+            System.out.println(destinations.get(i));
         }
     }
 
+    // method
+    private static void updateDestination() {
+        viewDestinations();
+        if (destinations.isEmpty()) return;
+
+        int index = getIntInput("Enter destination number to update: ") - 1;
+        if (index < 0 || index >= destinations.size()) {
+            System.out.println("Invalid index.");
+            return;
+        }
+
+        System.out.println("--- Enter new data (leave blank to keep current) ---");
+        Destination d = destinations.get(index);
+
+        String name = inputOrDefault("Name (" + d.name + "): ", d.name);
+        String location = inputOrDefault("Location (" + d.location + "): ", d.location);
+        String accommodation = inputOrDefault("Accommodation (" + d.accommodation + "): ", d.accommodation);
+        String costStr = input("Cost (" + d.cost + "): ");
+        double cost = costStr.isEmpty() ? d.cost : Double.parseDouble(costStr);
+        String climate = inputOrDefault("Climate (" + d.climate + "): ", d.climate);
+        String safety = inputOrDefault("Safety (" + d.safety + "): ", d.safety);
+        String attractions = inputOrDefault("Attractions (" + d.attractions + "): ", d.attractions);
+
+        destinations.set(index, new Destination(name, location, accommodation, cost, climate, safety, attractions));
+        System.out.println("Destination updated!");
+    }
+
+    // method
+    private static void deleteDestination() {
+        viewDestinations();
+        if (destinations.isEmpty()) return;
+
+        int index = getIntInput("Enter destination number to delete: ") - 1;
+        if (index < 0 || index >= destinations.size()) {
+            System.out.println("Invalid index.");
+            return;
+        }
+
+        destinations.remove(index);
+        System.out.println("Destination deleted!");
+    }
+
+    // method
     private static void saveToFile() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME))) {
             for (Destination d : destinations) {
@@ -105,12 +156,23 @@ public class TouristDestinationCatalog {
         }
     }
 
+    // --- Utility Methods ---
+    private static String input(String prompt) {
+        System.out.print(prompt);
+        return scanner.nextLine().trim();
+    }
+
+    private static String inputOrDefault(String prompt, String defaultValue) {
+        System.out.print(prompt);
+        String input = scanner.nextLine().trim();
+        return input.isEmpty() ? defaultValue : input;
+    }
+
     private static int getIntInput(String prompt) {
         while (true) {
             System.out.print(prompt);
-            String input = scanner.nextLine();
             try {
-                return Integer.parseInt(input.trim());
+                return Integer.parseInt(scanner.nextLine().trim());
             } catch (NumberFormatException e) {
                 System.out.println("Invalid number. Try again.");
             }
@@ -120,9 +182,8 @@ public class TouristDestinationCatalog {
     private static double getDoubleInput(String prompt) {
         while (true) {
             System.out.print(prompt);
-            String input = scanner.nextLine();
             try {
-                return Double.parseDouble(input.trim());
+                return Double.parseDouble(scanner.nextLine().trim());
             } catch (NumberFormatException e) {
                 System.out.println("Invalid number. Try again.");
             }
