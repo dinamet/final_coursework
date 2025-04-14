@@ -52,3 +52,19 @@ Sample (Input and Output are also here):
 
 Presentation:
 
+
+
+
+
+
+
+
+
+
+
+
+
+Project supports Data Export and Import:
+
+![image](https://github.com/user-attachments/assets/503a18e7-2460-4c8a-9be6-b44ea952531e)
+
