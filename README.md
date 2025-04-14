@@ -27,6 +27,9 @@ To be honest, this coursework was very difficult for me because I don't understa
 
 Sample (Input and Output are also here):
 
+![image](https://github.com/user-attachments/assets/5cf37776-770c-4e0d-b4d0-6bb048c9c9f8)
+
+
 Tourist Destination Catalog
 1. Add Destination
 2. View Destinations
