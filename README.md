@@ -50,11 +50,15 @@ Sample (Input and Output are also here):
 ![image](https://github.com/user-attachments/assets/4a9a13fa-4ef9-4511-ab6f-60725c7ce3cc)
 
 
+
 Presentation:
 
 The project consists of two classes: 
+
 Destination (Represents one tourist point. Contains the fields: location, accommodation, cost, climate, safety, attractions. Methods for getting/setting data, as well as converting to/from CSV format);
+
 TouristCatalog (The main class containing the program logic and the main() method. Stores a list of destinations (List<Destination>), operation counters and an activity log. Works through a menu with user input, allowing you to perform all actions).
+
 
 Implementation and main features:
 Adding a destination (Requests all fields from the user. Validation for empty input and correctness of numbers (cost) ).
@@ -65,12 +69,13 @@ Editing (The user selects the direction number. You can update any field (if lef
 
 Delete (Deletes the selected direction by number in the list).
 
+Save and Load (Saves directions to the destinations.csv file with a header. When launched, automatically loads data from the file).
 
+Search (Allows you to find directions by a substring in the location name).
 
+Sorting (Sorting by cost (ascending or descending) ).
 
-
-
-
+Report (Shows the number of completed operations. Displays a log of actions with timestamps).
 
 
 
