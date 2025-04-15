@@ -1,31 +1,73 @@
 # final_coursework
 
-# "Tourist Destination Catalog"
+# Tourist Destination Catalog
 
 Catalogs tourists destinations, providing information about attractions, accomodations and activities for travellers.
 
-Ametov Nurdin EEAIR-24
+Made by Ametov Nurdin 
 
-Description:
-This project is a console-based Tourist Destination Catalog that allows users to add, view, update, delete, save tourist destination data, generates reports, provides search and sort functionalities.
+Group: EEAIR-24
 
-Objectives:
-Help users manage a list of travel destinations. Allow basic CRUD operations with data validation. Enable report generation and activity tracking.
+# Description:
+This project is a console-based Tourist Destination Catalog. It allows users to:
 
-Documentation:
-This project implements a simple tourist destination catalog with CRUD operations (Create, Read, Update, Delete) using Java. The core data structure used is an ArrayList to store Destination objects, each containing information such as location, accommodation, cost, climate, safety, and attractions.
+- Add, view, update, and delete tourist destination data
 
-Data Structures:
-ArrayList, Scanner, File I/O.
+- Save and load data from a file
 
-Methods:
-addDestination, viewDestinations, updateDestination, deleteDestination, saveToFile, loadFromFile, showReport.
+- Search destinations by location
 
-Challenges:
+- Sort destinations by cost
+
+- Generate activity reports and view action history
+
+# Objectives:
+- Help users manage a list of travel destinations. 
+
+- Allow basic CRUD operations with data validation. 
+
+- Enable report generation and activity tracking.
+
+# Documentation:
+The project uses basic object-oriented programming in Java and implements a tourist catalog using the following core features:
+
+- Data structure: ArrayList to store destination entries
+
+- File handling: Read/write to .csv file for data persistence
+
+- Console input: Scanner for user interaction
+
+- Validation: Ensures data correctness (e.g., cost must be a valid number)
+
+- Reporting: Counts user actions and logs activity with timestamps
+
+# Data Structures:
+ArrayList, Scanner, File I/O, Comparator (for sorting), Simple menu system
+
+# Methods:
+- addDestination() – Adds a new destination with user input and validation
+
+- viewDestinations() – Displays all saved destinations
+
+- updateDestination() – Edits existing destination data
+
+- deleteDestination() – Removes a destination from the list
+
+- saveToFile() – Saves the list to a .csv file
+
+- loadFromFile() – Loads data from a .csv file
+
+- showReport() – Shows activity summary and log
+
+- searchDestinationByLocation() – Searches for destinations by keyword
+
+- sortDestinationsByCost() – Sorts destinations by cost (ascending/descending)
+
+# Challenges:
 To be honest, this coursework was very difficult for me because I don't understand this programming language properly. I realized again that I can't write all the code myself, so it's sad.
 
 
-Sample (Input and Output are also here):
+# Sample (Input and Output are also here):
 
 ![image](https://github.com/user-attachments/assets/5cf37776-770c-4e0d-b4d0-6bb048c9c9f8)
 
@@ -51,8 +93,7 @@ Sample (Input and Output are also here):
 
 
 
-[Tourist Destination Catalog.pptx](https://github.com/user-attachments/files/19752153/Tourist.Destination.Catalog.pptx)
-Presentation:
+# Presentation:
 
 The project consists of two classes: 
 
@@ -61,26 +102,27 @@ Destination (Represents one tourist point. Contains the fields: location, accomm
 TouristCatalog (The main class containing the program logic and the main() method. Stores a list of destinations (List<Destination>), operation counters and an activity log. Works through a menu with user input, allowing you to perform all actions).
 
 
-Implementation and main features:
-Adding a destination (Requests all fields from the user. Validation for empty input and correctness of numbers (cost) ).
+# Implementation and main features:
+- Adding a destination (Requests all fields from the user. Validation for empty input and correctness of numbers (cost) ).
 
-View (Shows all saved directions in a readable format).
+- View (Shows all saved directions in a readable format).
 
-Editing (The user selects the direction number. You can update any field (if left empty, the field will not change) ).
+- Editing (The user selects the direction number. You can update any field (if left empty, the field will not change) ).
 
-Delete (Deletes the selected direction by number in the list).
+- Delete (Deletes the selected direction by number in the list).
 
-Save and Load (Saves directions to the destinations.csv file with a header. When launched, automatically loads data from the file).
+- Save and Load (Saves directions to the destinations.csv file with a header. When launched, automatically loads data from the file).
 
-Search (Allows you to find directions by a substring in the location name).
+- Search (Allows you to find directions by a substring in the location name).
 
-Sorting (Sorting by cost (ascending or descending) ).
+- Sorting (Sorting by cost (ascending or descending) ).
 
-Report (Shows the number of completed operations. Displays a log of actions with timestamps).
+- Report (Shows the number of completed operations. Displays a log of actions with timestamps).
 
 
 
-Project supports Data Export and Import:
+# Project supports Data Export and Import:
 
 ![image](https://github.com/user-attachments/assets/503a18e7-2460-4c8a-9be6-b44ea952531e)
 
+This catalog is simple but functional. It demonstrates how real-world features like storage, sorting, and searching can be implemented with basic Java tools. It is a good practice project for beginners.
