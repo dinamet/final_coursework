@@ -32,7 +32,7 @@ class Destination {
     public void setAttractions(String attractions) { this.attractions = attractions; }
 
     public String toCSV() {
-        return location + ", " + accommodation + ", " + cost + ", " + climate + ", " + safety + ", " + attractions;
+        return location + "," + accommodation + "," + cost + "," + climate + "," + safety + "," + attractions;
     }
 
     public static Destination fromCSV(String line) {
