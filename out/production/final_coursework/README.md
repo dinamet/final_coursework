@@ -51,6 +51,7 @@ Sample (Input and Output are also here):
 
 
 
+[Tourist Destination Catalog.pptx](https://github.com/user-attachments/files/19752153/Tourist.Destination.Catalog.pptx)
 Presentation:
 
 The project consists of two classes: 

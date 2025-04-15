@@ -36,17 +36,18 @@ class Destination {
     }
 
     public static Destination fromCSV(String line) {
-        String[] parts = line.split(", ", 6);
-        if (parts.length < 6) return null;
+        String[] parts = line.split(",");
+
         try {
-            String location = parts[0];
-            String accommodation = parts[1];
-            double cost = Double.parseDouble(parts[2]);
-            String climate = parts[3];
-            String safety = parts[4];
-            String attractions = parts[5];
+            String location = parts[1];
+            String accommodation = parts[2];
+            double cost = Double.parseDouble(parts[3]);
+            String climate = parts[4];
+            String safety = parts[5];
+            String attractions = parts[6];
             return new Destination(location, accommodation, cost, climate, safety, attractions);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return null;
         }
     }
@@ -80,6 +81,7 @@ public class TouristCatalog {
             System.out.println("7. Show Report");
             System.out.println("8. Search destination by location");
             System.out.println("9. Sort destinations by cost");
+            System.out.println("10. Load from File");
             System.out.print("Select an option: ");
 
             String choice = scanner.nextLine();
@@ -126,7 +128,9 @@ public class TouristCatalog {
                     sortDestinationsByCost(ascending);
                     logActivity("Sorted destinations by cost (" + (ascending ? "ascending" : "descending") + ")");
                 }
-
+                case "10" -> {
+                    loadFromFile();
+                }
             }
         }
     }
@@ -265,23 +269,6 @@ public class TouristCatalog {
         }
     }
 
-    private static void loadFromFile() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
-            String line;
-            reader.readLine(); // Skip header
-            while ((line = reader.readLine()) != null) {
-                String[] splitLine = line.split(", ", 2);
-                if (splitLine.length == 2) {
-                    Destination d = Destination.fromCSV(splitLine[1]);
-                    if (d != null) destinations.add(d);
-                }
-            }
-            logActivity("Loaded destinations from file");
-        } catch (IOException e) {
-            System.out.println("No previous data to load or error reading file.");
-        }
-    }
-
     private static void showReport() {
         System.out.println("\n=== Summary Report ===");
         System.out.println("Total destinations: " + destinations.size());
@@ -327,4 +314,20 @@ public class TouristCatalog {
             System.out.println(d.toCSV());
         }
     }
+
+    private static void loadFromFile() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+            String line;
+            reader.readLine();
+            while ((line = reader.readLine()) != null) {
+                Destination d = Destination.fromCSV(line);
+                if (d != null) destinations.add(d);
+            }
+            logActivity("Loaded destinations from file");
+        }
+        catch (IOException e) {
+            System.out.println("No previous data to load or error reading file.");
+        }
+    }
+
 }
