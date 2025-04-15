@@ -52,6 +52,7 @@ class Destination {
     }
 }
 
+
 public class TouristCatalog {
     private static final Scanner scanner = new Scanner(System.in);
     private static final List<Destination> destinations = new ArrayList<>();
