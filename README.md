@@ -1,6 +1,6 @@
 # final_coursework
 
-"Tourist Destination Catalog"
+# "Tourist Destination Catalog"
 
 Catalogs tourists destinations, providing information about attractions, accomodations and activities for travellers.
 
